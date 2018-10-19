@@ -1,0 +1,68 @@
+service: dictionary-api
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: prod
+  region: us-east-2
+  environment: ${file(env.yml):${self:provider.stage}}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-2:*:*"
+
+functions:
+  dictionary-get:
+    handler: api/dictionary/index.get
+    events:
+      - http:
+          path: dictionary/{id}
+          method: get
+          cors: true
+  dictionary-list:
+    handler: api/dictionary/index.list
+    events:
+      - http:
+          path: dictionary
+          method: get
+          cors: true
+  dictionary-create:
+    handler: api/dictionary/index.create
+    events:
+      - http:
+          path: dictionary
+          method: post
+          cors: true
+          authorizer: aws_iam
+  dictionary-update:
+    handler: api/dictionary/index.update
+    events:
+      - http:
+          path: dictionary/{id}
+          method: put
+          cors: true
+          authorizer: aws_iam
+  dictionary-delete:
+    handler: api/dictionary/index.delete
+    events:
+      - http:
+          path: dictionary/{id}
+          method: delete
+          cors: true
+          authorizer: aws_iam
