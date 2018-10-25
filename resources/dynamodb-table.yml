@@ -1,0 +1,31 @@
+Resources:
+  DictionaryTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.dictionaryTable.name}
+      AttributeDefinitions:
+        - AttributeName: slug
+          AttributeType: S
+      KeySchema:
+        - AttributeName: slug
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: ${self:custom.dictionaryTable.throughput}
+        WriteCapacityUnits: ${self:custom.dictionaryTable.throughput}
+  TermsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.termsTable.name}
+      AttributeDefinitions:
+        - AttributeName: dictionary
+          AttributeType: S
+        - AttributeName: fullTerm
+          AttributeType: S
+      KeySchema:
+        - AttributeName: dictionary
+          KeyType: HASH
+        - AttributeName: fullTerm
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: ${self:custom.termsTable.throughput}
+        WriteCapacityUnits: ${self:custom.termsTable.throughput}

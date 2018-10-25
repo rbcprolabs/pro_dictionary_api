@@ -14,7 +14,7 @@ export default async function (event, _context, callback) {
       isOpen,
     } = data,
     params = {
-      TableName: 'dictionary',
+      TableName: process.env.dictionaryTableName,
       Item: {
         slug: cyrillicToTranslit(name, '_').toLowerCase(),
         name,

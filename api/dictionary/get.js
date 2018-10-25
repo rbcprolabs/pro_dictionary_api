@@ -6,7 +6,7 @@ import {
 
 export default async function (event, _context, callback) {
   const params = {
-    TableName: 'dictionary',
+    TableName: process.env.dictionaryTableName,
     Key: {
       slug: event.pathParameters.id
     }
@@ -23,6 +23,8 @@ export default async function (event, _context, callback) {
       }))
     }
   } catch (error) {
+    console.error(process.env)
+
     console.error(error)
     callback(null, failure({
       status: false

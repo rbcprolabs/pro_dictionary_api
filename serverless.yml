@@ -5,16 +5,38 @@ plugins:
   - serverless-offline
 
 custom:
+  stage: ${opt:stage, self:provider.stage}
+  dictionaryTable:
+    name: ${self:custom.stage}-dictionary
+    throughputs:
+      prod: 5
+      default: 1
+    throughput: ${self:custom.dictionaryTable.throughputs.${self:custom.stage}, self:custom.dictionaryTable.throughputs.default}
+  termsTable:
+    name: ${self:custom.stage}-terms
+    throughputs:
+      prod: 5
+      default: 1
+    throughput: ${self:custom.termsTable.throughputs.${self:custom.stage}, self:custom.termsTable.throughputs.default}
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
+
+resources:
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}
+  # Cognito
+  - ${file(resources/cognito-user-pool.yml)}
+  - ${file(resources/cognito-identity-pool.yml)}
 
 provider:
   name: aws
   runtime: nodejs8.10
   stage: prod
   region: us-east-2
-  environment: ${file(env.yml):${self:provider.stage}}
+  environment:
+    dictionaryTableName: ${self:custom.dictionaryTable.name}
+    termsTableName: ${self:custom.termsTable.name}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -25,7 +47,9 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-2:*:*"
+      Resource:
+        - 'Fn::GetAtt': [ DictionaryTable, Arn ]
+        - 'Fn::GetAtt': [ TermsTable, Arn ]
 
 functions:
   dictionary-get:

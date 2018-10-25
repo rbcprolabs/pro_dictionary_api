@@ -12,7 +12,7 @@ export default async function (event, _context, callback) {
       isOpen = false,
     } = data,
     params = {
-      TableName: 'dictionary',
+      TableName: process.env.dictionaryTableName,
       Key: {
         slug: event.pathParameters.id
       },

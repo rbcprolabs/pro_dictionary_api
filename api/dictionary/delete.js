@@ -6,7 +6,7 @@ import {
 
 export default async function (event, _context, callback) {
   const params = {
-    TableName: 'dictionary',
+    TableName: process.env.dictionaryTableName,
     Key: {
       slug: event.pathParameters.id
     }

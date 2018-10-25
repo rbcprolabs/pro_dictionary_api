@@ -6,7 +6,7 @@ import {
 
 export default async function (event, _context, callback) {
   const params = {
-    TableName: 'dictionary',
+    TableName: process.env.dictionaryTableName,
     Limit: event.queryStringParameters && event.queryStringParameters['limit'] || 5,
   }
 
