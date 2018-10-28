@@ -1,8 +1,10 @@
-import * as dynamoDbLib from 'utils/dynamodb-lib'
 import {
   success,
   failure,
 } from 'utils/response-lib'
+import {
+  dynamoDBCall,
+} from 'utils'
 
 export default async function (event, _context, callback) {
   const params = {
@@ -13,7 +15,7 @@ export default async function (event, _context, callback) {
   }
 
   try {
-    await dynamoDbLib.call('delete', params)
+    await dynamoDBCall('delete', params)
     callback(null, success({
       status: true
     }))

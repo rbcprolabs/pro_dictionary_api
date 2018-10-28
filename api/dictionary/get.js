@@ -1,8 +1,10 @@
-import * as dynamoDbLib from 'utils/dynamodb-lib'
 import {
   success,
   failure
 } from 'utils/response-lib'
+import {
+  dynamoDBCall,
+} from 'utils'
 
 export default async function (event, _context, callback) {
   const params = {
@@ -13,7 +15,7 @@ export default async function (event, _context, callback) {
   }
 
   try {
-    const result = await dynamoDbLib.call('get', params)
+    const result = await dynamoDBCall('get', params)
     if (result.Item) {
       callback(null, success(result.Item))
     } else {

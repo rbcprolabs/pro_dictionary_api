@@ -1,8 +1,10 @@
-import * as dynamoDbLib from 'utils/dynamodb-lib'
 import {
   success,
   failure,
 } from 'utils/response-lib'
+import {
+  dynamoDBCall,
+} from 'utils'
 
 export default async function (event, _context, callback) {
   const
@@ -28,7 +30,7 @@ export default async function (event, _context, callback) {
     }
 
   try {
-    await dynamoDbLib.call('update', params)
+    await dynamoDBCall.call('update', params)
     callback(null, success({
       status: true,
     }))

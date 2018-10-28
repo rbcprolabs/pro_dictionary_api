@@ -1,15 +1,18 @@
 import cyrillicToTranslit from 'utils/cyrillicToTranslit'
-import * as dynamoDbLib from 'utils/dynamodb-lib'
 import {
   success,
   failure,
 } from 'utils/response-lib'
+import {
+  removeSpaces,
+  dynamoDBCall,
+} from 'utils'
 
 export default async function (event, _context, callback) {
   const
     data = JSON.parse(event.body),
+    name = removeSpaces(data.name),
     {
-      name,
       isFlat,
       isOpen,
     } = data,
@@ -24,7 +27,7 @@ export default async function (event, _context, callback) {
     }
 
   try {
-    await dynamoDbLib.call('put', params)
+    await dynamoDBCall('put', params)
     callback(null, success(params.Item))
   } catch (error) {
     console.error(error)

@@ -1,8 +1,10 @@
-import * as dynamoDbLib from 'utils/dynamodb-lib'
 import {
   success,
   failure,
 } from 'utils/response-lib'
+import {
+  dynamoDBCall,
+} from 'utils'
 
 export default async function (event, _context, callback) {
   const params = {
@@ -11,7 +13,7 @@ export default async function (event, _context, callback) {
   }
 
   try {
-    const result = await dynamoDbLib.call('scan', params)
+    const result = await dynamoDBCall('scan', params)
     callback(null, success(result.Items))
   } catch (error) {
     console.error(error)
