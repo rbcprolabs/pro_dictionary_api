@@ -1,7 +1,7 @@
 import {
   success,
   failure,
-} from 'utils/response-lib'
+} from 'utils/response'
 import {
   dynamoDBCall,
 } from 'utils'
@@ -18,7 +18,7 @@ export default async function (event, _context, callback) {
   } catch (error) {
     console.error(error)
     callback(null, failure({
-      status: false
+      status: false,
     }))
   }
 }

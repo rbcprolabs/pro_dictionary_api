@@ -1,5 +1,11 @@
 import associations from './table'
 
+/**
+ * Transform cyrillic text to translit
+ * @param {string} input
+ * @param {string=} spaceReplacement
+ * @returns {string}
+ */
 export default function cyrillicToTranslit(input, spaceReplacement) {
   if (!input) return ''
 

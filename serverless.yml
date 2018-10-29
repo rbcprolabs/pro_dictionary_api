@@ -18,6 +18,9 @@ custom:
       prod: 5
       default: 1
     throughput: ${self:custom.termsTable.throughputs.${self:custom.stage}, self:custom.termsTable.throughputs.default}
+  path:
+    dictionary: 'api/dictionary'
+    term: 'api/term'
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -52,41 +55,5 @@ provider:
         - 'Fn::GetAtt': [ TermsTable, Arn ]
 
 functions:
-  dictionary-get:
-    handler: api/dictionary/index.get
-    events:
-      - http:
-          path: dictionary/{id}
-          method: get
-          cors: true
-  dictionary-list:
-    handler: api/dictionary/index.list
-    events:
-      - http:
-          path: dictionary
-          method: get
-          cors: true
-  dictionary-create:
-    handler: api/dictionary/index.create
-    events:
-      - http:
-          path: dictionary
-          method: post
-          cors: true
-          authorizer: aws_iam
-  dictionary-update:
-    handler: api/dictionary/index.update
-    events:
-      - http:
-          path: dictionary/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam
-  dictionary-delete:
-    handler: api/dictionary/index.delete
-    events:
-      - http:
-          path: dictionary/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam
+  - ${file(./api/dictionary/functions.yml)}
+  - ${file(./api/term/functions.yml)}

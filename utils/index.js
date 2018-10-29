@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk'
 import cyrillicToTranslit from './cyrillic-to-translit'
+import makeBatchWriteRequest from './batch-request'
 
 /**
  * Remove space from start & end string
@@ -26,4 +27,5 @@ export function dynamoDBCall(action, params) {
 
 export {
   cyrillicToTranslit,
+  makeBatchWriteRequest,
 }

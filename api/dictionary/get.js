@@ -1,7 +1,7 @@
 import {
   success,
-  failure
-} from 'utils/response-lib'
+  failure,
+} from 'utils/response'
 import {
   dynamoDBCall,
 } from 'utils'
@@ -10,8 +10,8 @@ export default async function (event, _context, callback) {
   const params = {
     TableName: process.env.dictionaryTableName,
     Key: {
-      slug: event.pathParameters.id
-    }
+      slug: event.pathParameters.id,
+    },
   }
 
   try {
@@ -21,15 +21,13 @@ export default async function (event, _context, callback) {
     } else {
       callback(null, failure({
         status: false,
-        error: 'Item not found.'
+        error: 'Item not found.',
       }))
     }
   } catch (error) {
-    console.error(process.env)
-
     console.error(error)
     callback(null, failure({
-      status: false
+      status: false,
     }))
   }
 }

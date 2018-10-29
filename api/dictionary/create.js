@@ -1,11 +1,11 @@
-import cyrillicToTranslit from 'utils/cyrillicToTranslit'
 import {
   success,
   failure,
-} from 'utils/response-lib'
+} from 'utils/response'
 import {
   removeSpaces,
   dynamoDBCall,
+  cyrillicToTranslit,
 } from 'utils'
 
 export default async function (event, _context, callback) {
@@ -23,7 +23,7 @@ export default async function (event, _context, callback) {
         name,
         isFlat,
         isOpen,
-      }
+      },
     }
 
   try {
@@ -32,7 +32,7 @@ export default async function (event, _context, callback) {
   } catch (error) {
     console.error(error)
     callback(null, failure({
-      status: false
+      status: false,
     }))
   }
 }
