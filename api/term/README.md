@@ -25,3 +25,10 @@ Content-Type: application/json
   ]
 }
 ```
+
+# list
+
+```http
+GET /list?limit=5&parent=Овощи HTTP/1.1
+Content-Type: application/json
+```

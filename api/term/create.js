@@ -62,11 +62,13 @@ async function updateTerm(parent, term, children) {
  * @param {string} fullTermParent
  */
 async function put(term, dictionary, parent) {
+  term = removeSpaces(term)
   const
     item = {
       dictionary,
-      term: removeSpaces(term),
+      term,
       parent,
+      fullTerm: `${parent}/${term}`,
     },
     params = {
       TableName: process.env.termTableName,
@@ -92,11 +94,15 @@ async function putList(items, dictionary, parent) {
     items,
     callback: ({
       term,
-    }) => ({
-      dictionary,
-      term: removeSpaces(term),
-      parent,
-    })
+    }) => {
+      term = removeSpaces(term)
+      return {
+        dictionary,
+        term,
+        parent,
+        fullTerm: `${parent}/${term}`,
+      }
+    }
   })
 
   await dynamoDBCall('batchWrite', params)

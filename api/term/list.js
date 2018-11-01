@@ -6,6 +6,14 @@ import {
   dynamoDBCall,
 } from 'utils'
 
+function getStartKeyByFullTerm(fullTerm) {
+  const fullTermArray = fullTerm.split('/')
+  return {
+    term: fullTermArray.splice(fullTermArray.length - 1, 1)[0],
+    parent: fullTermArray.join('/'),
+  }
+}
+
 export default async function (event, _context, callback) {
   const
     {
@@ -20,9 +28,7 @@ export default async function (event, _context, callback) {
           ':parent': parent,
       },
       Limit: limit,
-      ExclusiveStartKey: lastEvaluatedKey && {
-        fullTerm: lastEvaluatedKey,
-      },
+      ExclusiveStartKey: lastEvaluatedKey && getStartKeyByFullTerm(lastEvaluatedKey),
     }
 
   try {
@@ -30,7 +36,7 @@ export default async function (event, _context, callback) {
     callback(null, success({
       items: result.Items,
       count: result.Count,
-      lastEvaluatedKey: result.LastEvaluatedKey && result.LastEvaluatedKey.fullTerm
+      lastEvaluatedKey: result.LastEvaluatedKey && `${result.LastEvaluatedKey.parent}/${result.LastEvaluatedKey.term}`
     }))
   } catch (error) {
     console.error(error)
