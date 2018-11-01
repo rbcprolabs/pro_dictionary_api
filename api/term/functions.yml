@@ -5,13 +5,13 @@
 #         path: term/{id}
 #         method: get
 #         cors: true
-# term-list:
-#   handler: ${self:custom.path.term}/list.default
-#   events:
-#     - http:
-#         path: term
-#         method: get
-#         cors: true
+term-list:
+  handler: ${self:custom.path.term}/list.default
+  events:
+    - http:
+        path: term
+        method: get
+        cors: true
 term-create:
   handler: ${self:custom.path.term}/create.default
   events:

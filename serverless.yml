@@ -39,7 +39,7 @@ provider:
   region: us-east-2
   environment:
     dictionaryTableName: ${self:custom.dictionaryTable.name}
-    termsTableName: ${self:custom.termsTable.name}
+    termTableName: ${self:custom.termsTable.name}
   iamRoleStatements:
     - Effect: Allow
       Action:

@@ -17,14 +17,14 @@ Resources:
     Properties:
       TableName: ${self:custom.termsTable.name}
       AttributeDefinitions:
-        - AttributeName: dictionary
+        - AttributeName: parent
           AttributeType: S
-        - AttributeName: fullTerm
+        - AttributeName: term
           AttributeType: S
       KeySchema:
-        - AttributeName: dictionary
+        - AttributeName: parent
           KeyType: HASH
-        - AttributeName: fullTerm
+        - AttributeName: term
           KeyType: RANGE
       ProvisionedThroughput:
         ReadCapacityUnits: ${self:custom.termsTable.throughput}

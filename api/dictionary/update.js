@@ -30,7 +30,7 @@ export default async function (event, _context, callback) {
     }
 
   try {
-    await dynamoDBCall.call('update', params)
+    await dynamoDBCall('update', params)
     callback(null, success({
       status: true,
     }))

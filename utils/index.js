@@ -8,18 +8,17 @@ import makeBatchWriteRequest from './batch-request'
  * @returns {string}
  *
  * @example
- * const text = " Text "
- * removeSpaces(text) // "Text"
+ * removeSpaces(" Text ") // "Text"
  */
 export function removeSpaces(text) {
   return text.replace(/(^\s*)|(\s*)$/g, '')
 }
 
 /**
- * Alias for aws-sdk
+ * Alias for dynamoDB
  * @param {string} action
  * @param {object} params
- * @returns {Promise}
+ * @returns {Promise<any>}
  */
 export function dynamoDBCall(action, params) {
   return new AWS.DynamoDB.DocumentClient()[action](params).promise()
