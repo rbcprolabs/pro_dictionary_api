@@ -44,9 +44,10 @@ async function updateTerm(parent, term, children) {
       parent,
       term,
     },
-    UpdateExpression: 'SET children = :children',
+    UpdateExpression: 'SET children = list_append(if_not_exists(children, :emptyList), :children)',
     ExpressionAttributeValues: {
       ':children': children,
+      ':emptyList': [],
     },
     ReturnValues: 'ALL_NEW',
   }
