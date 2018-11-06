@@ -1,0 +1,6 @@
+{
+  "queryStringParameters": {
+    "limit": 5,
+    "parent": "Овощи/Помидор"
+  }
+}

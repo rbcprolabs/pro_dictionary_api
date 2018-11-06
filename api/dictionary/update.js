@@ -1,7 +1,7 @@
 import {
   success,
   failure,
-} from 'utils/response-lib'
+} from 'utils/response'
 import {
   dynamoDBCall,
 } from 'utils'
@@ -16,7 +16,7 @@ export default async function (event, _context, callback) {
     params = {
       TableName: process.env.dictionaryTableName,
       Key: {
-        slug: event.pathParameters.id
+        slug: event.pathParameters.id,
       },
       UpdateExpression: 'SET isFlat = :isFlat, isOpen = :isOpen',
       ExpressionAttributeValues: {
@@ -26,11 +26,11 @@ export default async function (event, _context, callback) {
       // ExpressionAttributeNames: {
       //   '#name': 'name'
       // },
-      ReturnValues: 'ALL_NEW'
+      ReturnValues: 'ALL_NEW',
     }
 
   try {
-    await dynamoDBCall.call('update', params)
+    await dynamoDBCall('update', params)
     callback(null, success({
       status: true,
     }))
