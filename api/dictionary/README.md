@@ -6,6 +6,7 @@ Content-Type: application/json
 
 {
   "name": "Овощи",
+  "slug": "ovoschi",
   "isFlat": false,
   "isOpen": true
 }

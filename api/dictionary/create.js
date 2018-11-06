@@ -12,6 +12,10 @@ export default async function (event, _context, callback) {
   const
     data = JSON.parse(event.body),
     name = removeSpaces(data.name),
+    slug = removeSpaces(data.slug
+      ? data.slug.toLowerCase()
+      : cyrillicToTranslit(name, '_').toLowerCase()
+    ),
     {
       isFlat,
       isOpen,
@@ -19,7 +23,7 @@ export default async function (event, _context, callback) {
     params = {
       TableName: process.env.dictionaryTableName,
       Item: {
-        slug: cyrillicToTranslit(name, '_').toLowerCase(),
+        slug,
         name,
         isFlat,
         isOpen,
