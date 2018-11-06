@@ -45,22 +45,3 @@ export default async function (event, _context, callback) {
     }))
   }
 }
-
-// function getByDictionary(dictionary, limit, lastEvaluatedKey) {
-//   const params = {
-//     TableName: process.env.termTableName,
-//     Key: {
-//       dictionary,
-//     },
-//     Limit: limit,
-//     ExclusiveStartKey: lastEvaluatedKey && {
-//       fullTerm: lastEvaluatedKey,
-//     },
-//   }
-
-//   return dynamoDBCall('scan', params)
-// }
-
-// function getByFullTerm(fullTerm, limit, lastEvaluatedKey) {
-
-// }
