@@ -110,19 +110,13 @@ async function putList(items, dictionary, parent) {
   return result
 }
 
-function checkDictionary(dictionary) {
-  if (!dictionary) throw new CustomError(ERROR.NOT_EXIST, `Dictionary "${data.dictionary}" does not exist`)
-
-  if (!dictionary.isOpen) throw new CustomError(ERROR.NOT_ACCEPTABLE, 'Dictionary is closed')
-}
-
 export default async function (event, _context, callback) {
   const
     data = JSON.parse(event.body),
     dictionary = await getDictionaryBySlug(data.dictionary)
 
   try {
-    checkDictionary(dictionary)
+    if (!dictionary) throw new CustomError(ERROR.NOT_EXIST, `Dictionary "${data.dictionary}" does not exist`)
 
     const result = await ((!!data.parent && !!data.term && typeof data.parent === 'string' && typeof data.term === 'string')
       ? addToChild(data, dictionary.slug, data.parent, data.term)

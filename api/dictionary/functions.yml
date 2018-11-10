@@ -5,6 +5,13 @@ dictionary-get:
         path: dictionary/{id}
         method: get
         cors: true
+dictionary-get-by-name:
+  handler: ${self:custom.path.dictionary}/getByName.default
+  events:
+    - http:
+        path: dictionaryByName/{name}
+        method: get
+        cors: true
 dictionary-list:
   handler: ${self:custom.path.dictionary}/list.default
   events:
