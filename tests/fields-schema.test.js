@@ -1,37 +1,37 @@
-import fieldsSchema from '../utils/fields-schema'
+import fieldsSchema, { Error } from '../utils/fields-schema'
 
 describe('Fields schema', () => {
-  test(('Reject existing'), () => expect(fieldsSchema({
+  it(('Reject existing'), () => expect(fieldsSchema({
     name: {
       optional: false,
     },
-  }, {})).rejects.toMatch('not exist'))
+  }, {})).rejects.toThrow(Error.NOT_EXIST('name').message))
 
-  test(('Resolve existing'), () => expect(fieldsSchema({
+  it(('Resolve existing'), () => expect(fieldsSchema({
     name: {
       optional: false,
     },
   }, {
     name: '',
-  })).resolves.toMatch('Success'))
+  })).resolves.toBe())
 
-  test(('Reject type'), () => expect(fieldsSchema({
+  it(('Reject type'), () => expect(fieldsSchema({
     name: {
       type: String,
     },
   }, {
     name: false,
-  })).rejects.toMatch('type error'))
+  })).rejects.toThrow(Error.WRONG_TYPE('name').message))
 
-  test(('Resolve type'), () => expect(fieldsSchema({
+  it(('Resolve type'), () => expect(fieldsSchema({
     name: {
       type: Boolean
     }
   }, {
     name: false,
-  })).resolves.toBe('Success'))
+  })).resolves.toBe())
 
-  test(('Reject min'), () => expect(fieldsSchema({
+  it(('Reject min'), () => expect(fieldsSchema({
     name: {
       type: String,
       length: {
@@ -40,9 +40,9 @@ describe('Fields schema', () => {
     }
   }, {
     name: 'Tes',
-  })).rejects.toBe('min'))
+  })).rejects.toThrow(Error.MIN('name', 4).message))
 
-  test(('Resolve min'), () => expect(fieldsSchema({
+  it(('Resolve min'), () => expect(fieldsSchema({
     name: {
       type: String,
       length: {
@@ -51,9 +51,9 @@ describe('Fields schema', () => {
     }
   }, {
     name: 'Tes',
-  })).resolves.toBe('Success'))
+  })).resolves.toBe())
 
-  test(('Reject max'), () => expect(fieldsSchema({
+  it(('Reject max'), () => expect(fieldsSchema({
     name: {
       type: String,
       length: {
@@ -62,9 +62,9 @@ describe('Fields schema', () => {
     }
   }, {
     name: 'Tes',
-  })).rejects.toBe('max'))
+  })).rejects.toThrow(Error.MAX('name', 2).message))
 
-  test(('Resolve max'), () => expect(fieldsSchema({
+  it(('Resolve max'), () => expect(fieldsSchema({
     name: {
       type: String,
       length: {
@@ -73,9 +73,9 @@ describe('Fields schema', () => {
     }
   }, {
     name: 'Tes',
-  })).resolves.toBe('Success'))
+  })).resolves.toBe())
 
-  test(('Reject min/max number'), () => expect(fieldsSchema({
+  it(('Reject min/max number'), () => expect(fieldsSchema({
     name: {
       type: Number,
       length: {
@@ -85,9 +85,9 @@ describe('Fields schema', () => {
     }
   }, {
     name: 6,
-  })).rejects.toBe('max'))
+  })).rejects.toThrow(Error.MAX('name', 5).message))
 
-  test(('Resolve min/max number'), () => expect(fieldsSchema({
+  it(('Resolve min/max number'), () => expect(fieldsSchema({
     name: {
       type: Number,
       length: {
@@ -97,23 +97,23 @@ describe('Fields schema', () => {
     }
   }, {
     name: 3,
-  })).resolves.toBe('Success'))
+  })).resolves.toBe())
 
-  test(('Reject pattern'), () => expect(fieldsSchema({
+  it(('Reject pattern'), () => expect(fieldsSchema({
     name: {
       type: String,
       pattern: /^[a-z_]+$/g,
     }
   }, {
     name: 'TEST TEST',
-  })).rejects.toBe('pattern'))
+  })).rejects.toThrow(Error.PATTERN('name', '/^[a-z_]+$/g').message))
 
-  test(('Resolve pattern'), () => expect(fieldsSchema({
+  it(('Resolve pattern'), () => expect(fieldsSchema({
     name: {
       type: String,
       pattern: /^[a-z_]+$/g,
     }
   }, {
     name: 'test_test',
-  })).resolves.toBe('Success'))
+  })).resolves.toBe())
 })

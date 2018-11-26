@@ -4,17 +4,14 @@ import CustomError, {
 } from 'utils/custom-error'
 
 /**
- * @param {string} name
+ * @param {string} slug
  */
-export default async function getByName(name) {
+export default async function getBySlug(slug) {
   const params = {
     TableName: process.env.dictionaryTableName,
-    FilterExpression: '#name = :name',
-    ExpressionAttributeNames: {
-      '#name': name,
-    },
+    FilterExpression: 'slug = :slug',
     ExpressionAttributeValues: {
-        ':name': event.pathParameters.name,
+        ':slug': slug,
     },
     Limit: 1,
   }
@@ -24,6 +21,6 @@ export default async function getByName(name) {
   if (result.Items[0]) {
     return result.Items[0]
   } else {
-    throw new CustomError(ERROR.NOT_EXIST, `Dictionary "${name}" does not exist`)
+    throw new CustomError(ERROR.NOT_EXIST, `Dictionary "${slug}" does not exist`)
   }
 }

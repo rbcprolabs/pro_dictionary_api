@@ -4,6 +4,8 @@
       "baseUrl": "./",
       "paths": {
         "api/*": ["api/*"],
+        "schema/*": ["schema/*"],
+        "handlers/*": ["handlers/*"],
         "utils/*": ["utils/*"],
       }
   }

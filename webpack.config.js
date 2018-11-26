@@ -21,6 +21,8 @@ module.exports = {
     extensions: ['.js', '.json'],
     alias: {
       'api': path.resolve(__dirname, 'api'),
+      'schema': path.resolve(__dirname, 'schema'),
+      'handlers': path.resolve(__dirname, 'handlers'),
       'utils': path.resolve(__dirname, 'utils'),
     }
   },

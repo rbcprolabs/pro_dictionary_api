@@ -1,9 +1,13 @@
+import SchemaError from './error'
+import Error from './errors'
+
+export { SchemaError, Error }
 
 /**
  * Validate data by schema
  * @param {Object} schema
  * @param {Object} data
- * @return {Promise<String>} Result
+ * @return {Promise<number>} Result
  * @example
  * const schema = {
  *  name: {
@@ -25,34 +29,34 @@ export default (schema, data) => new Promise((resolve, reject) => {
     const fieldValue = fieldName in data ? data[fieldName] : null
 
     if (fieldValue === null && !field.optional) {
-      return reject('not exist')
+      return reject(Error.NOT_EXIST(fieldName))
     }
 
     if ('type' in field && !(typeof fieldValue === field.type.name.toLowerCase())) {
-      return reject('type error')
+      return reject(Error.WRONG_TYPE(fieldName))
     }
 
     if ('length' in field ) {
       if ([Array, String].includes(field.type)) {
         if ('min' in field.length && fieldValue.length < field.length.min) {
-          return reject('min')
+          return reject(Error.MIN(fieldName, field.length.min))
         }
         if ('max' in field.length && fieldValue.length > field.length.max) {
-          return reject('max')
+          return reject(Error.MAX(fieldName, field.length.max))
         }
       } else if (field.type === Number) {
         if ('min' in field.length && fieldValue < field.length.min) {
-          return reject('min')
+          return reject(Error.MIN(fieldName, field.length.min))
         }
         if ('max' in field.length && fieldValue > field.length.max) {
-          return reject('max')
+          return reject(Error.MAX(fieldName, field.length.max))
         }
       }
     }
 
     if ('pattern' in field && typeof fieldValue === 'string' && !field.pattern.test(fieldValue)) {
-      return reject('pattern')
+      return reject(Error.PATTERN(fieldName, field.pattern.toString()))
     }
   }
-  resolve('Success')
+  resolve()
 })

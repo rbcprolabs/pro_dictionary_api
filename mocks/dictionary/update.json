@@ -1,5 +1,5 @@
 {
-  "body":  "{\"isFlat\":false,\"isOpen\":true}",
+  "body": "{\"slug\":\"ovoschi\",\"name\":\"Овощи\",\"isFlat\":false,\"isOpen\":false}",
   "pathParameters": {
     "id": "ovoschi"
   }

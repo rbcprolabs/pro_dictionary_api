@@ -1,5 +1,5 @@
-dictionary-get:
-  handler: ${self:custom.path.dictionary}/get.default
+dictionary-get-by-id:
+  handler: ${self:custom.path.dictionary}/getById.default
   events:
     - http:
         path: dictionary/{id}
@@ -12,15 +12,22 @@ dictionary-get-by-name:
         path: dictionaryByName/{name}
         method: get
         cors: true
-dictionary-list:
-  handler: ${self:custom.path.dictionary}/list.default
+dictionary-get-by-slug:
+  handler: ${self:custom.path.dictionary}/getBySlug.default
+  events:
+    - http:
+        path: dictionaryBySlug/{slug}
+        method: get
+        cors: true
+dictionary-get-all:
+  handler: ${self:custom.path.dictionary}/getAll.default
   events:
     - http:
         path: dictionary
         method: get
         cors: true
-dictionary-create:
-  handler: ${self:custom.path.dictionary}/create.default
+dictionary-put:
+  handler: ${self:custom.path.dictionary}/put.default
   events:
     - http:
         path: dictionary
