@@ -34,16 +34,16 @@ dictionary-put:
         method: post
         cors: true
         authorizer: aws_iam
-dictionary-update:
-  handler: ${self:custom.path.dictionary}/update.default
+dictionary-update-by-id:
+  handler: ${self:custom.path.dictionary}/updateById.default
   events:
     - http:
         path: dictionary/{id}
         method: put
         cors: true
         authorizer: aws_iam
-dictionary-delete:
-  handler: ${self:custom.path.dictionary}/delete.default
+dictionary-delete-by-id:
+  handler: ${self:custom.path.dictionary}/deleteById.default
   events:
     - http:
         path: dictionary/{id}

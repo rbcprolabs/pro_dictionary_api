@@ -1,22 +1,28 @@
-import dynamoDBCall from 'utils/dynamodb-call'
+import DictionaryModel from 'model/dictionary'
+import mapper from 'utils/mapper'
+import CustomError, {
+  CODE as ERROR,
+} from 'utils/custom-error'
 
 /**
  * @param {number} limit
  * @param {string} lastEvaluatedKey id
  */
 export default async function getAll(limit, lastEvaluatedKey) {
-  const params = {
-    TableName: process.env.dictionaryTableName,
-    Limit: limit,
-    ExclusiveStartKey: lastEvaluatedKey && {
-      id: lastEvaluatedKey,
-    },
-  }
+  const
+    dictionaries = []
+    scan = mapper.scan(DictionaryModel, { limit, startKey: lastEvaluatedKey && { id: lastEvaluatedKey } })
+  let nextLastEvaluatedKey
 
-  const result = await dynamoDBCall('scan', params)
+  for await (const item of scan)
+    dictionaries.push(item)
+
+  if (dictionaries.length = 0)
+    throw new CustomError(ERROR.NOT_EXIST, `Dictionaries does not exists`)
+
   return {
-    items: result.Items,
-    count: result.Count,
-    lastEvaluatedKey: result.LastEvaluatedKey && result.LastEvaluatedKey.id
+    items: dictionaries,
+    count: dictionaries.length,
+    lastEvaluatedKey: nextLastEvaluatedKey && nextLastEvaluatedKey,
   }
 }

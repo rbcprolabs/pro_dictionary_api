@@ -1,8 +1,4 @@
 const schema = {
-  term: {
-    type: String,
-    pattern: /^[а-яА-Я |]+$/g,
-  },
   // dictionary id
   dictionaryId: {
     type: String,
@@ -12,9 +8,14 @@ const schema = {
     optional: true,
     type: String,
   },
+  term: {
+    optional: true,
+    type: String,
+    pattern: /^[а-яА-Я |]+$/g,
+  },
   terms: {
     optional: true,
-    type: Array,
+    type: Object,
   }
 }
 

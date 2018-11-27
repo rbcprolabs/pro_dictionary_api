@@ -38,6 +38,7 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: us-east-2
   environment:
+    region: ${self:provider.region}
     dictionaryTableName: ${self:custom.dictionaryTable.name}
     termTableName: ${self:custom.termsTable.name}
   iamRoleStatements:

@@ -1,22 +1,20 @@
-import dynamoDBCall from 'utils/dynamodb-call'
-import uuid from 'uuid/v1'
+import DictionaryModel from 'model/dictionary'
+import mapper from 'utils/mapper'
 import removeSpaces from 'utils/remove-spaces'
 
 /**
- * @param {Object} data
+ * @param {string} data.slug
+ * @param {string} data.name
+ * @param {boolean} data.isFlat
+ * @param {boolean} data.isOpen
  */
-export default async function put(data) {
-  const params = {
-    TableName: process.env.dictionaryTableName,
-    Item: {
-      id: uuid(),
-      slug: data.slug,
-      name: removeSpaces(data.name),
-      isFlat: data.isFlat,
-      isOpen: data.isOpen,
-    },
-  }
+export default async function put({ slug, name, isFlat, isOpen }) {
+  const dictionaryModel = Object.assign(new DictionaryModel, {
+    slug,
+    name: removeSpaces(name),
+    isFlat,
+    isOpen,
+  })
 
-  await dynamoDBCall('put', params)
-  return params.Item
+  return await mapper.put(dictionaryModel)
 }

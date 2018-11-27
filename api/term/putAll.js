@@ -1,33 +1,32 @@
-import dynamoDBCall from 'utils/dynamodb-call'
-import makeBatchWriteRequest from 'utils/batch-request'
+import TermModel from 'model/term'
+import mapper from 'utils/mapper'
 import removeSpaces from 'utils/remove-spaces'
-import uuid from 'uuid/v1'
 
 /**
  * Put one item
  * @param {Array} data.terms
- * @param {string} data.dictionary
+ * @param {string} data.dictionaryId
  * @param {string} data.fullTermParent
  */
-export default async function putAll({ terms, dictionary, parent }) {
-  const {
-    result,
-    params,
-  } = makeBatchWriteRequest({
-    tableName: process.env.termTableName,
-    terms,
-    callback: ({ term }) => {
-      term = removeSpaces(term)
-      return {
-        id: uuid(),
-        dictionary,
-        term,
-        parent,
-        fullTerm: `${parent}/${term}`,
-      }
-    }
+export default async function putAll({ terms, dictionaryId, parent }) {
+  const termModels = terms.map((term) => {
+    term = removeSpaces(term.term)
+    return Object.assign(new TermModel, {
+      dictionaryId,
+      term,
+      parent,
+      fullTerm: `${parent}/${term}`,
+    })
   })
 
-  await dynamoDBCall('batchWrite', params)
-  return result
+  const successfullyAdded = []
+
+  for await (const persisted of mapper.batchPut(termModels))
+    successfullyAdded.push(persisted)
+
+  return {
+    items: successfullyAdded,
+    count: successfullyAdded.length,
+    isAllAdded: successfullyAdded.length === termModels.length,
+  }
 }

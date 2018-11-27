@@ -20,6 +20,14 @@ term-put:
         method: post
         cors: true
         authorizer: aws_iam
+term-put-all:
+  handler: ${self:custom.path.term}/putAll.default
+  events:
+    - http:
+        path: termAll
+        method: post
+        cors: true
+        authorizer: aws_iam
 # term-update:
 #   handler: ${self:custom.path.term}/update.default
 #   events:

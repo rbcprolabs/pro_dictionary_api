@@ -7,7 +7,7 @@ import CustomError, {
 } from 'utils/custom-error'
 import InstanceofSwith from 'utils/instanceof-switch'
 import getDictionaryById from 'api/dictionary/getById'
-import put from 'api/term/put'
+import putAll from 'api/term/putAll'
 import getById from 'api/term/getById'
 import updateById from 'api/term/updateById'
 import schema from 'schema/term'
@@ -22,8 +22,8 @@ export default async function (event, _context, callback) {
     await fieldsSchema(schema, data)
 
     const result = await ((!!data.parentId)
-      ? addToChild(data.term, dictionary.id, data.parentId)
-      : add(data.term, dictionary.id, dictionary.name))
+      ? addToChild(data.terms, dictionary.id, data.parentId)
+      : add(data.terms, dictionary.id, dictionary.name))
 
     callback(null, success(result))
   } catch (error) {
@@ -49,20 +49,22 @@ export default async function (event, _context, callback) {
   }
 }
 
-async function addToChild(term, dictionaryId, id) {
-  const { fullTerm } = await getById(id)
+async function addToChild(terms, dictionaryId, id) {
+  const
+    { fullterm } = await getById(id),
+    childrens = terms.map((item) => item.term)
 
   const [result] = await Promise.all([
-    add(term, dictionaryId, fullTerm),
-    updateById(id, {term}),
+    add(terms, dictionaryId, fullterm),
+    updateById(id, {childrens}),
   ])
 
   return result
 }
 
-const add = (term, dictionaryId, parent) =>
-  put({
-    term,
+const add = (terms, dictionaryId, parent) =>
+  putAll({
+    terms,
     dictionaryId,
     parent,
   })

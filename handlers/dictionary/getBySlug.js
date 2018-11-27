@@ -5,12 +5,12 @@ import {
 import CustomError, {
   CODE as ERROR,
 } from 'utils/custom-error'
-import getByName from 'api/dictionary/getByName'
+import getBySlug from 'api/dictionary/getBySlug'
 import InstanceofSwith from 'utils/instanceof-switch'
 
 export default async function (event, _context, callback) {
   try {
-    const result = await getByName(event.pathParameters.slug)
+    const result = await getBySlug(event.pathParameters.slug)
     callback(null, success(result))
   } catch (error) {
     new InstanceofSwith(error)

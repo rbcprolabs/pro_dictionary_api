@@ -1,4 +1,5 @@
-import dynamoDBCall from 'utils/dynamodb-call'
+import DictionaryModel from 'model/dictionary'
+import mapper from 'utils/mapper'
 import CustomError, {
   CODE as ERROR,
 } from 'utils/custom-error'
@@ -7,20 +8,12 @@ import CustomError, {
  * @param {string} slug
  */
 export default async function getBySlug(slug) {
-  const params = {
-    TableName: process.env.dictionaryTableName,
-    FilterExpression: 'slug = :slug',
-    ExpressionAttributeValues: {
-        ':slug': slug,
-    },
-    Limit: 1,
-  }
+  let dictionary
+  for await (const item of mapper.scan(DictionaryModel))
+    if (item.slug === slug) return dictionary = item
 
-  const result = await dynamoDBCall('scan', params)
-
-  if (result.Items[0]) {
-    return result.Items[0]
-  } else {
+  if (!dictionary)
     throw new CustomError(ERROR.NOT_EXIST, `Dictionary "${slug}" does not exist`)
-  }
+
+  return dictionary
 }

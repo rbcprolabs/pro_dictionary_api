@@ -1,26 +1,30 @@
-import dynamoDBCall from 'utils/dynamodb-call'
+import DictionaryModel from 'model/dictionary'
+import mapper from 'utils/mapper'
+import CustomError, {
+  CODE as ERROR,
+} from 'utils/custom-error'
 
 /**
  * @param {string} id
  */
-export default async function updateById(id, data) {
-  const params = {
-    TableName: process.env.dictionaryTableName,
-    Key: {
-      id,
-    },
-    UpdateExpression: 'SET slug = :slug, #name = :name, isFlat = :isFlat, isOpen = :isOpen',
-    ExpressionAttributeValues: {
-      ':slug': data.slug,
-      ':name': data.name,
-      ':isFlat': data.isFlat,
-      ':isOpen': data.isOpen,
-    },
-    ExpressionAttributeNames: {
-      '#name': 'name',
-    },
-    ReturnValues: 'ALL_NEW',
+export default async function updateById(id, { slug, name, isFlat, isOpen }) {
+  const dictionaryModel = Object.assign(new DictionaryModel, {
+    id,
+  })
+
+  let dictionary
+  try {
+    dictionary =  await mapper.get(dictionaryModel)
+  } catch (error) {
+    throw new CustomError(ERROR.NOT_EXIST, `Dictionary "${id}" does not exist`)
   }
 
-  return await dynamoDBCall('update', params)
+  dictionary = Object.assign(dictionary, {
+    slug,
+    name,
+    isFlat,
+    isOpen,
+  })
+
+  return await mapper.update(dictionary)
 }

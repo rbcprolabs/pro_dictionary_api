@@ -1,4 +1,5 @@
-import dynamoDBCall from 'utils/dynamodb-call'
+import TermModel from 'model/term'
+import mapper from 'utils/mapper'
 import CustomError, {
   CODE as ERROR,
 } from 'utils/custom-error'
@@ -7,18 +8,13 @@ import CustomError, {
  * @param {string} id
  */
 export default async function getById(id) {
-  const params = {
-    TableName: process.env.termTableName,
-    Key: {
-      id,
-    },
-  }
+  const termModel = Object.assign(new TermModel, {
+    id,
+  })
 
-  const result = await dynamoDBCall('get', params)
-
-  if (result.Item) {
-    return result.Item
-  } else {
-    throw new CustomError(ERROR.NOT_EXIST, `Term does not exist`)
+  try {
+    return await mapper.get(termModel)
+  } catch (error) {
+    throw new CustomError(ERROR.NOT_EXIST, `Term "${id}" does not exist`)
   }
 }
