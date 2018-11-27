@@ -5,7 +5,8 @@
   "description": "Dictionary API",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "invoke-local": "node scripts/invoke-local"
   },
   "license": "MIT",
   "repository": {
@@ -22,6 +23,7 @@
     "babel-loader": "^8.0.4",
     "babel-plugin-source-map-support": "^2.0.1",
     "jest": "^23.6.0",
+    "serverless": "^1.33.2",
     "serverless-offline": "^3.28.0",
     "serverless-webpack": "^5.1.0",
     "webpack": "^4.21.0",

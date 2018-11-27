@@ -6,6 +6,6 @@ import AWS from 'aws-sdk'
  * @param {object} params
  * @returns {Promise<any>}
  */
-export function dynamoDBCall(action, params) {
+export default function dynamoDBCall(action, params) {
   return new AWS.DynamoDB.DocumentClient()[action](params).promise()
 }

@@ -5,7 +5,7 @@ plugins:
   - serverless-offline
 
 custom:
-  stage: ${opt:stage, self:provider.stage}
+  stage: ${self:provider.stage}
   dictionaryTable:
     name: ${self:custom.stage}-dictionary
     throughputs:
@@ -35,7 +35,7 @@ resources:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: prod
+  stage: ${opt:stage, 'dev'}
   region: us-east-2
   environment:
     dictionaryTableName: ${self:custom.dictionaryTable.name}
