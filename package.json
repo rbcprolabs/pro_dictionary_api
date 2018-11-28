@@ -37,8 +37,7 @@
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@babel/runtime": "^7.1.2",
     "babel-core": "^7.0.0-bridge.0",
-    "source-map-support": "^0.5.9",
-    "uuid": "^3.3.2"
+    "source-map-support": "^0.5.9"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"

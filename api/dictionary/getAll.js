@@ -10,14 +10,14 @@ import CustomError, {
  */
 export default async function getAll(limit, lastEvaluatedKey) {
   const
-    dictionaries = []
+    dictionaries = [],
     scan = mapper.scan(DictionaryModel, { limit, startKey: lastEvaluatedKey && { id: lastEvaluatedKey } })
   let nextLastEvaluatedKey
 
   for await (const item of scan)
     dictionaries.push(item)
 
-  if (dictionaries.length = 0)
+  if (dictionaries.length === 0)
     throw new CustomError(ERROR.NOT_EXIST, `Dictionaries does not exists`)
 
   return {

@@ -27,6 +27,7 @@ export default async function (event, _context, callback) {
 
     callback(null, success(result))
   } catch (error) {
+    throw error
     new InstanceofSwith(error)
       .case(CustomError, () =>
         callback(null, failure({
@@ -44,17 +45,22 @@ export default async function (event, _context, callback) {
         console.error(error)
         callback(null, failure({
           status: false,
+          error: error.message
         }))
       })
   }
 }
 
-async function addToChild(term, dictionaryId, id) {
-  const { fullTerm } = await getById(id)
+async function addToChild(term, dictionaryId, parentId) {
+  const parentTerm = await getById(parentId)
+
+  parentTerm.childrens = (parentTerm.childrens)
+    ? new Set([...parentTerm.childrens, term])
+    : new Set([term])
 
   const [result] = await Promise.all([
-    add(term, dictionaryId, fullTerm),
-    updateById(id, {term}),
+    add(term, dictionaryId, parentTerm.fullTerm),
+    updateById(parentId, parentTerm),
   ])
 
   return result

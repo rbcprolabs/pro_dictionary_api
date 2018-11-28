@@ -10,7 +10,7 @@ import InstanceofSwith from 'utils/instanceof-switch'
 
 export default async function (event, _context, callback) {
   try {
-    await deleteById(event.pathParameters.id)
+    await deleteById(decodeURI(event.pathParameters.id))
     callback(null, success({
       status: true,
     }))

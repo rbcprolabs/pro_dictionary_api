@@ -25,5 +25,5 @@ export default class TermModel {
   synonyms
 
   @attribute({type: 'Set', memberType: 'String'})
-  children
+  childrens
 }

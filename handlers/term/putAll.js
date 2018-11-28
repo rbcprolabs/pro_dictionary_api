@@ -12,6 +12,7 @@ import getById from 'api/term/getById'
 import updateById from 'api/term/updateById'
 import schema from 'schema/term'
 import fieldsSchema, { SchemaError } from 'utils/fields-schema'
+import { Set } from 'core-js';
 
 export default async function (event, _context, callback) {
   try {
@@ -49,14 +50,18 @@ export default async function (event, _context, callback) {
   }
 }
 
-async function addToChild(terms, dictionaryId, id) {
+async function addToChild(terms, dictionaryId, parentId) {
   const
-    { fullterm } = await getById(id),
+    parentTerm = await getById(parentId),
     childrens = terms.map((item) => item.term)
 
+  parentTerm.childrens = (parentTerm.childrens)
+    ? new Set([...parentTerm.childrens, ...childrens])
+    : new Set(childrens)
+
   const [result] = await Promise.all([
-    add(terms, dictionaryId, fullterm),
-    updateById(id, {childrens}),
+    add(terms, dictionaryId, parentTerm.fullTerm),
+    updateById(parentId, parentTerm),
   ])
 
   return result

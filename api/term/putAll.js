@@ -6,7 +6,7 @@ import removeSpaces from 'utils/remove-spaces'
  * Put one item
  * @param {Array} data.terms
  * @param {string} data.dictionaryId
- * @param {string} data.fullTermParent
+ * @param {string} data.parent
  */
 export default async function putAll({ terms, dictionaryId, parent }) {
   const termModels = terms.map((term) => {

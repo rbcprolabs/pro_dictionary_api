@@ -6,7 +6,7 @@ import removeSpaces from 'utils/remove-spaces'
  * Put one item
  * @param {string} data.term
  * @param {string} data.dictionaryId
- * @param {string} data.fullTermParent
+ * @param {string} data.parent
  */
 export default async function put({ term, dictionaryId, parent }) {
   term = removeSpaces(term)
