@@ -12,6 +12,13 @@ term-get-all:
         path: term
         method: get
         cors: true
+term-get-by-full-term:
+  handler: ${self:custom.path.term}/getByFullTerm.default
+  events:
+    - http:
+        path: termByFullTerm/{fullTerm}
+        method: get
+        cors: true
 term-put:
   handler: ${self:custom.path.term}/put.default
   events:

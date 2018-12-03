@@ -10,9 +10,8 @@ import getDictionaryById from 'api/dictionary/getById'
 import putAll from 'api/term/putAll'
 import getById from 'api/term/getById'
 import updateById from 'api/term/updateById'
-import schema from 'schema/term'
+import { putAll as putAllSchema } from 'schema/term'
 import fieldsSchema, { SchemaError } from 'utils/fields-schema'
-import { Set } from 'core-js';
 
 export default async function (event, _context, callback) {
   try {
@@ -20,7 +19,7 @@ export default async function (event, _context, callback) {
       data = JSON.parse(event.body),
       dictionary = await getDictionaryById(data.dictionaryId)
 
-    await fieldsSchema(schema, data)
+    await fieldsSchema(putAllSchema, data)
 
     const result = await ((!!data.parentId)
       ? addToChild(data.terms, dictionary.id, data.parentId)

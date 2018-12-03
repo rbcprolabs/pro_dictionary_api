@@ -8,15 +8,22 @@ const schema = {
     optional: true,
     type: String,
   },
-  term: {
-    optional: true,
-    type: String,
-    pattern: /^[а-яА-Я |]+$/g,
-  },
-  terms: {
-    optional: true,
-    type: Object,
-  }
 }
 
 export default schema
+
+export const put = {
+  ...schema,
+  term: {
+    type: String,
+    pattern: /^[а-яА-Яa-zA-Z |–—]+$/g,
+  },
+}
+
+export const putAll = {
+  ...schema,
+  terms: {
+    optional: true,
+    type: Object,
+  },
+}

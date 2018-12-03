@@ -10,7 +10,7 @@ import getDictionaryById from 'api/dictionary/getById'
 import put from 'api/term/put'
 import getById from 'api/term/getById'
 import updateById from 'api/term/updateById'
-import schema from 'schema/term'
+import { put as putSchema } from 'schema/term'
 import fieldsSchema, { SchemaError } from 'utils/fields-schema'
 
 export default async function (event, _context, callback) {
@@ -19,7 +19,7 @@ export default async function (event, _context, callback) {
       data = JSON.parse(event.body),
       dictionary = await getDictionaryById(data.dictionaryId)
 
-    await fieldsSchema(schema, data)
+    await fieldsSchema(putSchema, data)
 
     const result = await ((!!data.parentId)
       ? addToChild(data.term, dictionary.id, data.parentId)
@@ -27,7 +27,6 @@ export default async function (event, _context, callback) {
 
     callback(null, success(result))
   } catch (error) {
-    throw error
     new InstanceofSwith(error)
       .case(CustomError, () =>
         callback(null, failure({
@@ -45,7 +44,6 @@ export default async function (event, _context, callback) {
         console.error(error)
         callback(null, failure({
           status: false,
-          error: error.message
         }))
       })
   }
