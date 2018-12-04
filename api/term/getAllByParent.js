@@ -12,11 +12,24 @@ import CustomError, {
 export default async function getAllByParent(parent, limit, lastEvaluatedKey) {
   const
     terms = [],
-    scan = mapper.scan(TermModel, { limit, startKey: lastEvaluatedKey && { id: lastEvaluatedKey } })
+    scan = mapper.scan(TermModel, { startKey: lastEvaluatedKey && { id: lastEvaluatedKey } })
   let nextLastEvaluatedKey
 
-  for await (const item of scan)
-    if (item.parent === parent) terms.push(item)
+  for await (const item of scan) {
+    if (item.parent !== parent)
+      continue
+
+    if (item.childrens)
+      item.childrens = Array.from(item.childrens)
+
+    if (item.synonyms)
+      item.synonyms = Array.from(item.synonyms)
+
+    terms.push(item)
+
+    if (terms.length === limit)
+      return
+  }
 
   if (terms.length === 0)
     throw new CustomError(ERROR.NOT_EXIST, `Terms does not exists`)

@@ -1,15 +1,8 @@
-# term-get:
-#   handler: ${self:custom.path.term}/get.default
-#   events:
-#     - http:
-#         path: term/{id}
-#         method: get
-#         cors: true
-term-get-all:
-  handler: ${self:custom.path.term}/getAll.default
+term-get-all-by-parent:
+  handler: ${self:custom.path.term}/getAllByParent.default
   events:
     - http:
-        path: term
+        path: getAllByParent/{parent}
         method: get
         cors: true
 term-get-by-full-term:

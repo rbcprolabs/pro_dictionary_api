@@ -16,7 +16,6 @@ export const put = {
   ...schema,
   term: {
     type: String,
-    pattern: /^[а-яА-Яa-zA-Z |–—]+$/g,
   },
 }
 

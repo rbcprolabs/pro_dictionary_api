@@ -10,7 +10,7 @@ import InstanceofSwith from 'utils/instanceof-switch'
 
 export default async function (event, _context, callback) {
   try {
-    const result = await getByFullTerm(decodeURI(event.pathParameters.fullTerm))
+    const result = await getByFullTerm(decodeURIComponent(event.pathParameters.fullTerm))
     callback(null, success(result))
   } catch (error) {
     new InstanceofSwith(error)
