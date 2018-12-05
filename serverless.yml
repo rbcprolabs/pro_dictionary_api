@@ -36,7 +36,7 @@ provider:
   name: aws
   runtime: nodejs8.10
   stage: ${opt:stage, 'dev'}
-  region: us-east-2
+  region: eu-west-1
   environment:
     region: ${self:provider.region}
     dictionaryTableName: ${self:custom.dictionaryTable.name}
