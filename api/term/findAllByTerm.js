@@ -5,19 +5,6 @@ import {
   FunctionExpression,
 } from '@aws/dynamodb-expressions'
 
-// {
-//   type: 'And',
-//   conditions: [{
-//     type: 'Equals',
-//     subject: new AttributePath('dictionaryId'),
-//     object: dictionaryId,
-//   },new FunctionExpression(
-//     'contains',
-//     new AttributePath('synonyms'),
-//     term.toLowerCase(),
-//   )],
-// }
-
 /**
  * @param {string} dictionaryId
  * @param {string} term
@@ -29,7 +16,7 @@ export default async function findByTerm(dictionaryId, term, limit, lastEvaluate
     items = [],
     scan = mapper.scan(
       TermModel,
-      { // FIXME: contains expression
+      {
         filter: {
           type: 'And',
           conditions: [{
