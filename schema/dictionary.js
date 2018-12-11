@@ -1,7 +1,6 @@
 const schema = {
   name: {
     type: String,
-    pattern: /^[а-яА-Я ]+$/g,
     length: {
       min: 2,
       max: 100,
