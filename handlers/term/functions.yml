@@ -1,3 +1,10 @@
+term-find-all-by-term:
+  handler: ${self:custom.path.term}/findAllByTerm.default
+  events:
+    - http:
+        path: findAllByTerm/{dictionaryId}/{term}
+        method: get
+        cors: true
 term-get-all-by-parent:
   handler: ${self:custom.path.term}/getAllByParent.default
   events:

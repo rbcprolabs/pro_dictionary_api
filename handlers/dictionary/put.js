@@ -28,10 +28,9 @@ export default async function (event, _context, callback) {
         }, ERROR.NOT_ACCEPTABLE.statusCode))
       )
       .default(() => {
-        // console.error(error)
+        console.error(error)
         callback(null, failure({
           status: false,
-          error: error.message,
         }))
       })
   }

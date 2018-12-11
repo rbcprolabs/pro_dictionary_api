@@ -4,9 +4,7 @@ import removeSpaces from 'utils/remove-spaces'
 
 /**
  * Put one item
- * @param {string} data.term
- * @param {string} data.dictionaryId
- * @param {string} data.parent
+ * @param {{term: string,dictionaryId: string, parent: string}} data
  */
 export default async function put({ term, dictionaryId, parent }) {
   term = removeSpaces(term)
@@ -15,6 +13,7 @@ export default async function put({ term, dictionaryId, parent }) {
     term,
     parent,
     fullTerm: `${parent}/${term}`,
+    synonyms: [term.toLowerCase()],
   })
 
   return await mapper.put(termModel)
