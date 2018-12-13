@@ -16,6 +16,7 @@ export default async function putAll({ terms, dictionaryId, parent }) {
       term,
       parent,
       fullTerm: `${parent}/${term}`,
+      termLowCase: term.toLowerCase(),
     })
   })
 

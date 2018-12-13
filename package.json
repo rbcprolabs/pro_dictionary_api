@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest",
     "invoke-local": "node scripts/invoke-local",
+    "transform-db": "node scripts/transform-db",
     "deploy:development": "serverless deploy --stage dev",
     "deploy:production": "serverless deploy --stage prod"
   },

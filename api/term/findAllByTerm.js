@@ -12,6 +12,7 @@ import {
  * @param {string} lastEvaluatedKey
  */
 export default async function findByTerm(dictionaryId, term, limit, lastEvaluatedKey) {
+  term = term.toLowerCase()
   const
     items = [],
     scan = mapper.scan(
@@ -23,11 +24,21 @@ export default async function findByTerm(dictionaryId, term, limit, lastEvaluate
             type: 'Equals',
             subject: new AttributePath('dictionaryId'),
             object: dictionaryId,
-          },new FunctionExpression(
-            'contains',
-            new AttributePath('synonyms'),
-            term.toLowerCase(),
-          )],
+          },{
+            type: 'Or',
+            conditions: [
+              new FunctionExpression(
+                'contains',
+                new AttributePath('termLowCase'),
+                term,
+              ),
+              new FunctionExpression(
+                'contains',
+                new AttributePath('synonyms'),
+                term,
+              )
+            ],
+          }],
         },
         limit,
         startKey: lastEvaluatedKey && { id: lastEvaluatedKey },

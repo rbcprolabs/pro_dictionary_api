@@ -13,7 +13,7 @@ export default async function put({ term, dictionaryId, parent }) {
     term,
     parent,
     fullTerm: `${parent}/${term}`,
-    synonyms: [term.toLowerCase()],
+    termLowCase: term.toLowerCase(),
   })
 
   return await mapper.put(termModel)
