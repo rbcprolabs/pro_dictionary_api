@@ -3,11 +3,11 @@ const
   readline = require('readline')
 
 try {
-  require('./prepare-db/index')
+  require('./transform-db/index')
 } catch (_error) {
   console.error(`
     Cant't find transformator.
-    Make file with name index.js in ./prepre-db
+    Make file with name index.js in ./transform-db
     Content for example:\n
     module.exports = function (dbItem) {
       dbItem.title.s = dbItem.title.s.replace('^', '?')
@@ -17,10 +17,10 @@ try {
   process.exit(1)
 }
 
-const transform = require('./prepare-db/index')
+const transform = require('./transform-db/index')
 
 const lineReader = readline.createInterface({
-  input: fs.createReadStream('./scripts/prepare-db/input')
+  input: fs.createReadStream('./scripts/transform-db/input')
 })
 
 let result = ''
@@ -42,5 +42,5 @@ lineReader.on('line', (line) => {
 })
 
 lineReader.on('close', () => {
-  fs.writeFileSync('./scripts/prepare-db/result', result)
+  fs.writeFileSync('./scripts/transform-db/result', result)
 })

@@ -51,4 +51,4 @@ env.yml
 # Jetbrains IDEs
 .idea
 
-scripts/prepare-db
+scripts/transform-db/
