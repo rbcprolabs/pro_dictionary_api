@@ -6,18 +6,18 @@ import mapper from 'utils/mapper'
  * @param {string} lastEvaluatedKey id
  */
 export default async function getAll(limit, lastEvaluatedKey) {
-  const
-    items = [],
-    scan = mapper.scan(
-      DictionaryModel,
-      {
-        limit,
-        startKey: lastEvaluatedKey && { id: lastEvaluatedKey } ,
-      }
-    ).pages()
+  let items = []
+  const scan = mapper.scan(
+    DictionaryModel,
+    {
+      limit,
+      startKey: lastEvaluatedKey && { id: lastEvaluatedKey } ,
+    }
+  ).pages()
 
-  for await (const item of scan)
-    items.push(item)
+  for await (const chunk of scan)
+    if (chunk.length > 0)
+      items = items.concat(chunk)
 
   return {
     items,

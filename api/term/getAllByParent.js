@@ -8,30 +8,23 @@ import { AttributePath } from '@aws/dynamodb-expressions/build/AttributePath'
  * @param {string} lastEvaluatedKey id
  */
 export default async function getAllByParent(parent, limit, lastEvaluatedKey) {
-  const
-    items = [],
-    scan = mapper.scan(
-      TermModel,
-      {
-        filter: {
-          type: 'Equals',
-          subject: new AttributePath('parent'),
-          object: parent,
-        },
-        limit,
-        startKey: lastEvaluatedKey && { id: lastEvaluatedKey }
-      }
-    ).pages()
+  let items = []
+  const scan = mapper.scan(
+    TermModel,
+    {
+      filter: {
+        type: 'Equals',
+        subject: new AttributePath('parent'),
+        object: parent,
+      },
+      limit,
+      startKey: lastEvaluatedKey && { id: lastEvaluatedKey }
+    }
+  ).pages()
 
-  for await (const item of scan) {
-    if (item.childrens)
-      item.childrens = Array.from(item.childrens)
-
-    if (item.synonyms)
-      item.synonyms = Array.from(item.synonyms)
-
-    items.push(item)
-  }
+  for await (const chunk of scan)
+    if (chunk.length > 0)
+      items = items.concat(chunk)
 
   return {
     items,
