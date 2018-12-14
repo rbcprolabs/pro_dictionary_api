@@ -2,7 +2,7 @@
 
 If the term has no parent: name of the dictionary is used as `parent` option.
 ```http
-GET /getAllByParent/Овощи?limit=5 HTTP/1.1
+GET /termAllByParent/Овощи?limit=5 HTTP/1.1
 Content-Type: application/json
 ```
 
