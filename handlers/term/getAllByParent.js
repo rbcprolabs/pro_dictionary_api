@@ -11,7 +11,7 @@ export default async function (event, _context, callback) {
       {
         limit = 20,
         lastEvaluatedKey,
-      } = event.queryStringParameters
+      } = event.queryStringParameters || {}
 
     const result = await getAllByParent(parent, limit, lastEvaluatedKey)
     callback(null, success(result))

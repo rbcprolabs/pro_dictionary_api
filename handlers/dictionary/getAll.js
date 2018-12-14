@@ -9,7 +9,7 @@ export default async function (event, _context, callback) {
     const {
       limit = 5,
       lastEvaluatedKey,
-    } = event.queryStringParameters
+    } = event.queryStringParameters || {}
 
     const result = await getAll(limit, lastEvaluatedKey)
     callback(null, success(result))

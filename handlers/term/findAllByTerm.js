@@ -12,7 +12,7 @@ export default async function(event, _context, callback) {
       {
         limit = 20,
         lastEvaluatedKey,
-      } = event.queryStringParameters
+      } = event.queryStringParameters || {}
 
     const result = await findAllByTerm(dictionaryId, term, limit, lastEvaluatedKey)
     callback(null, success(result))
