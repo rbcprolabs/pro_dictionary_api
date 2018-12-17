@@ -19,6 +19,9 @@ export default class TermModel {
   term
 
   @attribute({type: 'String'})
+  termLowCase
+
+  @attribute({type: 'String'})
   fullTerm
 
   @attribute({type: 'Set', memberType: 'String'})

@@ -13,8 +13,10 @@ export default async function put({ slug, name, isFlat, isOpen }) {
     slug,
     name: removeSpaces(name),
     isFlat,
-    isOpen,
   })
+
+  if (isFlat)
+    dictionaryModel.isOpen = isOpen
 
   return await mapper.put(dictionaryModel)
 }
