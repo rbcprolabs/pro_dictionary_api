@@ -13,7 +13,9 @@ export default async function getById(id) {
   })
 
   try {
-    return await mapper.get(termModel)
+    const term = await mapper.get(termModel)
+
+    return term.normalized
   } catch (error) {
     throw new CustomError(ERROR.NOT_EXIST, `Term "${id}" does not exist`)
   }

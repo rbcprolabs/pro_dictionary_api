@@ -26,4 +26,20 @@ export default class TermModel {
 
   @attribute({type: 'Set', memberType: 'String'})
   childrens
+
+  get normalized() {
+    const normalized = {
+      id: this.id,
+      dictionaryId: this.dictionaryId,
+      parent: this.parent,
+      term: this.term,
+      fullTerm: this.fullTerm,
+    }
+
+    // Transform Set to Array for http-response
+    if (this.childrens) normalized.childrens = Array.from(this.childrens)
+    if (this.synonyms) normalized.synonyms = Array.from(this.synonyms)
+
+    return normalized
+  }
 }

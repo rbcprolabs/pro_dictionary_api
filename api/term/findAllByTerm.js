@@ -49,7 +49,7 @@ export default async function findByTerm(dictionaryId, term, limit, lastEvaluate
       items = items.concat(chunk)
 
   return {
-    items,
+    items: items.map((item) => item.normalized),
     count: scan.count,
     lastEvaluatedKey: scan.lastEvaluatedKey && scan.lastEvaluatedKey.id,
   }
