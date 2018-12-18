@@ -19,8 +19,8 @@ custom:
       default: 1
     throughput: ${self:custom.termsTable.throughputs.${self:custom.stage}, self:custom.termsTable.throughputs.default}
   path:
-    dictionary: 'handlers/dictionary'
-    term: 'handlers/term'
+    dictionary: 'src/handlers/dictionary'
+    term: 'src/handlers/term'
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -57,5 +57,5 @@ provider:
         - 'Fn::GetAtt': [ TermsTable, Arn ]
 
 functions:
-  - ${file(./handlers/dictionary/functions.yml)}
-  - ${file(./handlers/term/functions.yml)}
+  - ${file(./src/handlers/dictionary/functions.yml)}
+  - ${file(./src/handlers/term/functions.yml)}

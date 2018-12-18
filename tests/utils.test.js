@@ -1,4 +1,4 @@
-import removeSpaces from '../utils/remove-spaces'
+import removeSpaces from '../src/utils/remove-spaces'
 
 test('Remove spaces', () => {
   expect(removeSpaces(' text text ')).toEqual('text text')

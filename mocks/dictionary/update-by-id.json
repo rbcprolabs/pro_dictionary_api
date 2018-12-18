@@ -1,6 +1,6 @@
 {
-  "body": "{\"slug\":\"ovoschi\",\"name\":\"Овощи\",\"isFlat\":false,\"isOpen\":false}",
+  "body": "{\"slug\":\"ovoschi\",\"name\":\"Овощи\",\"isFlat\":false,\"isOpen\":true}",
   "pathParameters": {
-    "id": "3e3e9614-7032-4f04-bd9f-523c3b74f3d4"
+    "id": "e0bcfa94-9d77-4ede-ae5b-b22a38ab1817"
   }
 }
