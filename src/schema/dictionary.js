@@ -5,7 +5,7 @@ const schema = {
   slug: Joi.string().regex(/^[a-z_]{2,80}$/),
   isFlat: Joi.boolean(),
   isOpen: Joi.boolean(),
-  placeholderRule: Joi.string().regex(/^[а-яa-z ,.|:_-–—]{2,160}$/i),
+  placeholderRule: Joi.string().regex(/^[а-яa-z0-9 ,.|:_-–—]{2,160}$/i),
 }
 
 export const put = {
