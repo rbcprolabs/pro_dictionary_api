@@ -1,6 +1,7 @@
 import DictionaryModel from 'model/dictionary'
 import mapper from 'utils/mapper'
 import ResponseError from 'utils/response-error'
+import removeSpaces from 'src/utils/remove-spaces'
 
 /**
  * @param {string} id
@@ -20,10 +21,10 @@ export default async function updateById(id, { slug, name, isFlat, isOpen, place
 
   dictionary = Object.assign(dictionary, {
     slug,
-    name,
+    name: removeSpaces(name),
     isFlat,
     isOpen,
-    placeholderRule,
+    placeholderRule: removeSpaces(placeholderRule),
   })
 
   return await mapper.update(dictionary)
