@@ -5,7 +5,7 @@ plugins:
   - serverless-offline
 
 custom:
-  stage: ${opt:stage, self:provider.stage}
+  stage: ${self:provider.stage}
   dictionaryTable:
     name: ${self:custom.stage}-dictionary
     throughputs:
@@ -19,8 +19,8 @@ custom:
       default: 1
     throughput: ${self:custom.termsTable.throughputs.${self:custom.stage}, self:custom.termsTable.throughputs.default}
   path:
-    dictionary: 'api/dictionary'
-    term: 'api/term'
+    dictionary: 'src/handlers/dictionary'
+    term: 'src/handlers/term'
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
@@ -35,9 +35,10 @@ resources:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: prod
-  region: us-east-2
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-1
   environment:
+    region: ${self:provider.region}
     dictionaryTableName: ${self:custom.dictionaryTable.name}
     termTableName: ${self:custom.termsTable.name}
   iamRoleStatements:
@@ -56,5 +57,5 @@ provider:
         - 'Fn::GetAtt': [ TermsTable, Arn ]
 
 functions:
-  - ${file(./api/dictionary/functions.yml)}
-  - ${file(./api/term/functions.yml)}
+  - ${file(./src/handlers/dictionary/functions.yml)}
+  - ${file(./src/handlers/term/functions.yml)}

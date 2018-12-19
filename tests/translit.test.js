@@ -1,4 +1,4 @@
-import cyrillicToTranslit from '../utils/cyrillic-to-translit'
+import cyrillicToTranslit from '../src/utils/cyrillic-to-translit'
 
 test('Cyrillic to translit', () => {
   expect(cyrillicToTranslit('Овощи')).toEqual('Ovoschi')

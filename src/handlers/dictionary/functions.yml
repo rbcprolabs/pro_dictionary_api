@@ -1,0 +1,52 @@
+dictionary-get-by-id:
+  handler: ${self:custom.path.dictionary}/getById.default
+  events:
+    - http:
+        path: dictionary/{id}
+        method: get
+        cors: true
+dictionary-get-by-name:
+  handler: ${self:custom.path.dictionary}/getByName.default
+  events:
+    - http:
+        path: dictionaryByName/{name}
+        method: get
+        cors: true
+dictionary-get-by-slug:
+  handler: ${self:custom.path.dictionary}/getBySlug.default
+  events:
+    - http:
+        path: dictionaryBySlug/{slug}
+        method: get
+        cors: true
+dictionary-get-all:
+  handler: ${self:custom.path.dictionary}/getAll.default
+  events:
+    - http:
+        path: dictionary
+        method: get
+        cors: true
+dictionary-put:
+  handler: ${self:custom.path.dictionary}/put.default
+  events:
+    - http:
+        path: dictionary
+        method: post
+        cors: true
+        authorizer: aws_iam
+dictionary-update-by-id:
+  handler: ${self:custom.path.dictionary}/updateById.default
+  events:
+    - http:
+        path: dictionary/{id}
+        method: put
+        cors: true
+        authorizer: aws_iam
+dictionary-delete-by-id:
+  handler: ${self:custom.path.dictionary}/deleteById.default
+  events:
+    - http:
+        path: dictionary/{id}
+        method: delete
+        cors: true
+        authorizer: aws_iam

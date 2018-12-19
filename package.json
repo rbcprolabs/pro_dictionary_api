@@ -5,7 +5,12 @@
   "description": "Dictionary API",
   "main": "webpack.config.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "invoke-local": "node scripts/invoke-local",
+    "transform-db": "node scripts/transform-db",
+    "lint": "eslint --ext .js src/",
+    "deploy:development": "serverless deploy --stage dev",
+    "deploy:production": "serverless deploy --stage prod"
   },
   "license": "MIT",
   "repository": {
@@ -15,21 +20,29 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/helper-module-imports": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-decorators": "^7.1.6",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "aws-sdk": "^2.338.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
-    "babel-plugin-source-map-support": "^2.0.1",
+    "eslint": "^5.10.0",
+    "eslint-loader": "^2.1.1",
     "jest": "^23.6.0",
+    "serverless": "^1.34.1",
     "serverless-offline": "^3.28.0",
     "serverless-webpack": "^5.1.0",
     "webpack": "^4.21.0",
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "@aws/dynamodb-data-mapper": "^0.7.3",
+    "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
+    "@aws/dynamodb-expressions": "^0.7.3",
     "@babel/runtime": "^7.1.2",
-    "babel-core": "^7.0.0-bridge.0",
-    "source-map-support": "^0.5.9"
+    "joi": "^14.3.0"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"

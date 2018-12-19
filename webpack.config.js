@@ -1,5 +1,5 @@
 const
-  path = require('path'),
+  pathResolve = require('path').resolve,
   slsw = require('serverless-webpack'),
   nodeExternals = require('webpack-node-externals')
 
@@ -20,16 +20,22 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.json'],
     alias: {
-      'api': path.resolve(__dirname, 'api'),
-      'utils': path.resolve(__dirname, 'utils'),
+      'api': pathResolve(__dirname, 'src/api'),
+      'model': pathResolve(__dirname, 'src/model'),
+      'schema': pathResolve(__dirname, 'src/schema'),
+      'handlers': pathResolve(__dirname, 'src/handlers'),
+      'utils': pathResolve(__dirname, 'src/utils'),
     }
   },
   module: {
     rules: [{
       test: /\.js$/,
-      loader: 'babel-loader',
-      include: __dirname,
-      exclude: /node_modules/
+      // include: pathResolve(__dirname, 'src'),
+      exclude: /node_modules/,
+      use: [
+        'babel-loader',
+        'eslint-loader',
+      ],
     }]
   }
 }
