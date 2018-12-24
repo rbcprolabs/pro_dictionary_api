@@ -1,7 +1,7 @@
 import DictionaryModel from 'model/dictionary'
 import mapper from 'utils/mapper'
 import ResponseError from 'utils/response-error'
-import removeSpaces from 'src/utils/remove-spaces'
+import removeSpaces from 'utils/remove-spaces'
 
 /**
  * @param {string} id
