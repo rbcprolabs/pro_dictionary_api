@@ -19,6 +19,13 @@ term-get-all-by-parent:
         path: termAllByParent/{parent}
         method: get
         cors: true
+term-get-by-id:
+  handler: ${self:custom.path.term}/getById.default
+  events:
+    - http:
+        path: term/{id}
+        method: get
+        cors: true
 term-get-by-full-term:
   handler: ${self:custom.path.term}/getByFullTerm.default
   events:
