@@ -29,5 +29,6 @@ export default async function updateById(id, { term, childrens, synonyms }) {
     termLowCase: term.toLowerCase(),
   })
 
-  return await mapper.update(newTermModel)
+  const result = await mapper.update(newTermModel)
+  return result.normalized
 }
