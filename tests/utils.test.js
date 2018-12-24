@@ -1,8 +1,8 @@
 import removeSpaces from '../src/utils/remove-spaces'
 
 test('Remove spaces', () => {
-  expect(removeSpaces(' text text ')).toEqual('text text')
-  expect(removeSpaces('Text ')).toEqual('Text')
-  expect(removeSpaces(' Text')).toEqual('Text')
-  expect(typeof removeSpaces('Text')).toBe('string')
+  expect(' text text '::removeSpaces()).toEqual('text text')
+  expect('Text '::removeSpaces()).toEqual('Text')
+  expect(' Text'::removeSpaces()).toEqual('Text')
+  expect(typeof 'Text'::removeSpaces()).toBe('string')
 })

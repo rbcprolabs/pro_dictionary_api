@@ -7,7 +7,7 @@ import removeSpaces from 'utils/remove-spaces'
  * @param {{term:string,dictionaryId:string,parent:string}} data
  */
 export default async function put({ term, dictionaryId, parent }) {
-  term = removeSpaces(term)
+  term = term::removeSpaces()
   const termModel = Object.assign(new TermModel, {
     dictionaryId,
     term,

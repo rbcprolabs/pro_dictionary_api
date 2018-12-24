@@ -4,8 +4,8 @@
  * @returns {string}
  *
  * @example
- * removeSpaces(" Text ") // "Text"
+ * " text "::removeSpaces() // "Text"
  */
-export default function removeSpaces(text) {
-  return text.replace(/(^\s*)|(\s*)$/g, '')
+export default function removeSpaces() {
+  return this.replace(/(^\s*)|(\s*)$/g, '')
 }

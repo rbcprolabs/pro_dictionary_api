@@ -28,3 +28,7 @@ export const putAll = {
     term: schema.term.required(),
   })).required(),
 }
+
+export const update = {
+  ...schema,
+}

@@ -49,14 +49,14 @@ term-put-all:
         method: post
         cors: true
         authorizer: aws_iam
-# term-update:
-#   handler: ${self:custom.path.term}/update.default
-#   events:
-#     - http:
-#         path: term/{id}
-#         method: put
-#         cors: true
-#         authorizer: aws_iam
+term-update-by-id:
+  handler: ${self:custom.path.term}/updateById.default
+  events:
+    - http:
+        path: term/{id}
+        method: put
+        cors: true
+        authorizer: aws_iam
 # term-delete:
 #   handler: ${self:custom.path.term}/delete.default
 #   events:

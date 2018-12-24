@@ -4,13 +4,11 @@ import removeSpaces from 'utils/remove-spaces'
 
 /**
  * Put one item
- * @param {Array} data.terms
- * @param {string} data.dictionaryId
- * @param {string} data.parent
+ * @param {{terms:string[],dictionaryId:string,parent:string}} data
  */
 export default async function putAll({ terms, dictionaryId, parent }) {
   const termModels = terms.map((term) => {
-    term = removeSpaces(term.term)
+    term = term.term::removeSpaces()
     return Object.assign(new TermModel, {
       dictionaryId,
       term,

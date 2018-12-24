@@ -21,10 +21,10 @@ export default async function updateById(id, { slug, name, isFlat, isOpen, place
 
   dictionary = Object.assign(dictionary, {
     slug,
-    name: removeSpaces(name),
+    name: name::removeSpaces(),
     isFlat,
     isOpen,
-    placeholderRule: removeSpaces(placeholderRule),
+    placeholderRule: placeholderRule::removeSpaces(),
   })
 
   return await mapper.update(dictionary)

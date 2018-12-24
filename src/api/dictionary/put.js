@@ -3,18 +3,15 @@ import mapper from 'utils/mapper'
 import removeSpaces from 'utils/remove-spaces'
 
 /**
- * @param {string} data.slug
- * @param {string} data.name
- * @param {boolean} data.isFlat
- * @param {boolean} data.isOpen
+ * @param {{slug:string,name:string,isFlat:boolean,isOpen:boolean,placeholderRule:string}} data
  */
 export default async function put({ slug, name, isFlat, isOpen, placeholderRule }) {
   const dictionaryModel = Object.assign(new DictionaryModel, {
     slug,
-    name: removeSpaces(name),
+    name: name::removeSpaces(),
     isFlat,
     ...(() => isFlat && { isOpen })(),
-    placeholderRule: removeSpaces(placeholderRule),
+    placeholderRule: placeholderRule::removeSpaces(),
   })
 
   return await mapper.put(dictionaryModel)
