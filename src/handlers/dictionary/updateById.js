@@ -13,10 +13,8 @@ export default async function (event, _context, callback) {
     if (!validData.isFlat && 'isOpen' in validData)
       delete validData.isOpen
 
-    await updateById(event.pathParameters.id, validData)
-    callback(null, response({
-      status: true,
-    }))
+    const result = await updateById(event.pathParameters.id, validData)
+    callback(null, response(result))
   } catch ({ message: error, code = 406 }) {
     callback(null, response({
       status: false,

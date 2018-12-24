@@ -10,10 +10,8 @@ export default async function (event, _context, callback) {
     // validarte request by schema
     const validData = await Joi.validate(data, updateSchema)
 
-    await updateById(event.pathParameters.id, validData)
-    callback(null, response({
-      status: true,
-    }))
+    const result = await updateById(event.pathParameters.id, validData)
+    callback(null, response(result))
   } catch ({ message: error, code = 406 }) {
     callback(null, response({
       status: false,
