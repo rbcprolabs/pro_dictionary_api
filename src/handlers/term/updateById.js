@@ -11,7 +11,7 @@ export default async function (event, _context, callback) {
     const validData = await Joi.validate(data, updateSchema)
 
     const result = await updateById(event.pathParameters.id, validData)
-    callback(null, response(result))
+    callback(null, response(result.normalized))
   } catch ({ message: error, code = 406 }) {
     callback(null, response({
       status: false,

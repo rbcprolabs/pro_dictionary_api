@@ -1,10 +1,12 @@
 import response from 'utils/response'
-import getByFullTerm from 'api/term/getByFullTerm'
+import deleteById from 'api/term/deleteById'
 
 export default async function (event, _context, callback) {
   try {
-    const result = await getByFullTerm(decodeURIComponent(event.pathParameters.fullTerm))
-    callback(null, response(result.normalized))
+    await deleteById(decodeURI(event.pathParameters.id))
+    callback(null, response({
+      status: true,
+    }))
   } catch ({ message: error, code = 406 }) {
     callback(null, response({
       status: false,

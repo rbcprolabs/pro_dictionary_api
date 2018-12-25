@@ -27,7 +27,7 @@ export default async function getAllByParent(parent, limit, lastEvaluatedKey) {
       items = items.concat(chunk)
 
   return {
-    items: items.map((item) => item.normalized),
+    items,
     count: scan.count,
     lastEvaluatedKey: scan.lastEvaluatedKey && scan.lastEvaluatedKey.id,
   }

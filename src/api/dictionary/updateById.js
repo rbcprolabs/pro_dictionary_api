@@ -1,25 +1,15 @@
-import DictionaryModel from 'model/dictionary'
 import mapper from 'utils/mapper'
-import ResponseError from 'utils/response-error'
 import removeSpaces from 'utils/remove-spaces'
+import getById from 'api/dictionary/getById'
 
 /**
  * @param {string} id
  * @param {{slug:string,name:string,isFlat:boolean,isOpen:boolean,placeholderRule:string}} data
  */
 export default async function updateById(id, { slug, name, isFlat, isOpen, placeholderRule }) {
-  const dictionaryModel = Object.assign(new DictionaryModel, {
-    id,
-  })
+  const dictionaryModel = await getById(id)
 
-  let dictionary
-  try {
-    dictionary =  await mapper.get(dictionaryModel)
-  } catch (error) {
-    throw new ResponseError(ResponseError.NOT_EXIST, `Dictionary "${id}" does not exist`)
-  }
-
-  dictionary = Object.assign(dictionary, {
+  const newDictionaryModel = Object.assign(dictionaryModel, {
     slug,
     name: name::removeSpaces(),
     isFlat,
@@ -27,5 +17,5 @@ export default async function updateById(id, { slug, name, isFlat, isOpen, place
     placeholderRule: placeholderRule::removeSpaces(),
   })
 
-  return await mapper.update(dictionary)
+  return await mapper.update(newDictionaryModel)
 }

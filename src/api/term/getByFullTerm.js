@@ -16,7 +16,7 @@ export default async function getByFullTerm(fullTerm) {
     },
   })
   for await (const item of scan)
-    term = item.normalized
+    term = item
 
   if (!term)
     throw new ResponseError(ResponseError.NOT_EXIST, `Term "${fullTerm}" does not exist`)

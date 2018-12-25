@@ -13,7 +13,7 @@ export default async function getById(id) {
   try {
     const term = await mapper.get(termModel)
 
-    return term.normalized
+    return term
   } catch (error) {
     throw new ResponseError(ResponseError.NOT_EXIST, `Term "${id}" does not exist`)
   }

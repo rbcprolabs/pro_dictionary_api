@@ -3,11 +3,11 @@
       "experimentalDecorators": true,
       "baseUrl": "./",
       "paths": {
-        "api/*": ["api/*"],
-        "model/*": ["model/*"],
-        "schema/*": ["schema/*"],
-        "handlers/*": ["handlers/*"],
-        "utils/*": ["utils/*"],
+        "api/*": ["src/api/*"],
+        "model/*": ["src/model/*"],
+        "schema/*": ["src/schema/*"],
+        "handlers/*": ["src/handlers/*"],
+        "utils/*": ["src/utils/*"],
       }
   }
 }

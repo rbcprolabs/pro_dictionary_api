@@ -12,7 +12,10 @@ export default async function(event, _context, callback) {
       } = event.queryStringParameters || {}
 
     const result = await findAllByDictionary(dictionaryId, term, limit, lastEvaluatedKey)
-    callback(null, response(result))
+    callback(null, response({
+      ...result,
+      items: result.items.map((item) => item.normalized),
+    }))
   } catch ({ message: error, code = 406 }) {
     callback(null, response({
       status: false,

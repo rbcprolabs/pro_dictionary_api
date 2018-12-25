@@ -57,11 +57,11 @@ term-update-by-id:
         method: put
         cors: true
         authorizer: aws_iam
-# term-delete:
-#   handler: ${self:custom.path.term}/delete.default
-#   events:
-#     - http:
-#         path: term/{id}
-#         method: delete
-#         cors: true
-#         authorizer: aws_iam
+term-delete-by-id:
+  handler: ${self:custom.path.term}/deleteById.default
+  events:
+    - http:
+        path: term/{id}
+        method: delete
+        cors: true
+        authorizer: aws_iam
